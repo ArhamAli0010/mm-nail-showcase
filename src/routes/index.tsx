@@ -1,24 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { AwardMark, SectionIntro, Testimonials, TextLink } from "@/components/studio/Parts";
+import { courses, galleries, imagery, services } from "@/lib/studio-data";
+export const Route=createFileRoute("/")({head:()=>({meta:[{title:"MM Nail Studio & Academy — Newbury"},{name:"description",content:"Boutique nail services and considered nail education in Newbury."},{property:"og:title",content:"MM Nail Studio & Academy"},{property:"og:description",content:"Boutique nail services and considered nail education in Newbury."},{property:"og:type",content:"website"},{name:"twitter:card",content:"summary_large_image"}]}),component:Home});
+const slides=[{image:imagery.oxblood,kicker:"MM Nail Studio · Newbury",title:"Quiet luxury, down to your fingertips."},{image:imagery.blush,kicker:"Considered nail care",title:"Beautifully precise. Unmistakably yours."},{image:imagery.classroom,kicker:"MM Nail Academy",title:"Learn the craft. Build it your way."}];
+function Home(){const [active,setActive]=useState(0);useEffect(()=>{const id=window.setInterval(()=>setActive(v=>(v+1)%slides.length),5000);return()=>clearInterval(id)},[]);return <>
+<section className="relative min-h-[calc(100vh-5rem)] overflow-hidden">{slides.map((s,i)=><img key={s.title} src={s.image} alt="Editorial nail studio work" className={`absolute inset-0 h-full w-full object-cover transition-all duration-1000 ${i===active?"scale-100 opacity-100":"scale-[1.03] opacity-0"}`} width={1600} height={1000}/>) }<div className="absolute inset-0 bg-hero-overlay"/><div className="relative mx-auto flex min-h-[calc(100vh-5rem)] max-w-[1440px] items-end px-5 pb-20 text-background lg:px-10"><div className="max-w-3xl"><p className="eyebrow text-blush">{slides[active]?.kicker}</p><h1 className="mt-4 text-6xl sm:text-7xl lg:text-8xl">{slides[active]?.title}</h1><p className="mt-6 max-w-xl text-lg text-background/80">A boutique studio and education space where thoughtful technique meets refined, lasting design.</p><div className="mt-8 flex flex-wrap gap-3"><Button asChild size="lg"><Link to="/booking">Book an appointment</Link></Button><Button asChild size="lg" variant="outline" className="border-background text-background hover:bg-background hover:text-primary"><Link to="/academy">Explore courses</Link></Button></div></div><div className="absolute bottom-6 right-5 flex gap-2 lg:right-10"><Button size="icon" variant="secondary" aria-label="Previous slide" onClick={()=>setActive((active+slides.length-1)%slides.length)}><ArrowLeft/></Button><Button size="icon" variant="secondary" aria-label="Next slide" onClick={()=>setActive((active+1)%slides.length)}><ArrowRight/></Button></div></div></section>
+<section className="px-5 py-12 lg:px-10"><div className="mx-auto max-w-[1440px]"><AwardMark/></div></section>
+<section className="mx-auto grid max-w-[1440px] items-center gap-12 px-5 py-20 md:grid-cols-2 lg:px-10"><div className="image-zoom aspect-[4/5]"><img src={imagery.studio} alt="MM Nail Studio interior" loading="lazy" className="h-full w-full object-cover" width={1600} height={1000}/></div><div><SectionIntro eyebrow="The studio" title="A slower, more considered kind of appointment." copy="Founded around precision, nail health and an unhurried client experience, MM Nail Studio brings editorial detail to an intimate Newbury setting."/><div className="mt-7"><TextLink to="/studio">Discover the studio</TextLink></div></div></section>
+<section className="bg-blush py-24"><div className="mx-auto max-w-[1440px] px-5 lg:px-10"><SectionIntro eyebrow="Studio menu" title="Signature treatments" copy="Meticulous prep, refined structure and finishes designed around you."/><div className="mt-12 grid gap-px bg-gold/50 md:grid-cols-3">{services.slice(0,3).map((s,i)=><Link to="/services" key={s.name} className="group bg-blush p-7 transition-colors hover:bg-background lg:p-10"><span className="font-display text-5xl text-primary/25">0{i+1}</span><h3 className="mt-10 text-3xl">{s.name}</h3><p className="mt-3 text-sm text-muted-foreground">{s.duration} · {s.price}</p><p className="mt-5 leading-relaxed">{s.includes}</p><ArrowRight className="mt-8 text-primary transition-transform group-hover:translate-x-2"/></Link>)}</div></div></section>
+<section className="py-24"><div className="mx-auto max-w-[1440px] px-5 lg:px-10"><SectionIntro eyebrow="MM Nail Academy" title="Education with intention" copy="Technique-led learning for thoughtful, ambitious nail professionals — wherever you are in your journey."/><div className="mt-12 grid gap-8 md:grid-cols-3">{courses.slice(0,3).map(c=><Link key={c.slug} to="/academy/$slug" params={{slug:c.slug}} className="group"><div className="image-zoom aspect-[4/3]"><img src={c.image} alt={c.title} loading="lazy" className="h-full w-full object-cover" width={1600} height={1000}/></div><p className="eyebrow mt-6">{c.mode}</p><h3 className="mt-2 text-3xl">{c.title}</h3><p className="mt-3 text-sm text-muted-foreground">{c.included}</p></Link>)}</div><div className="mt-10"><TextLink to="/academy">View all courses</TextLink></div></div></section>
+<section className="overflow-hidden py-16"><div className="mb-9 px-5 lg:px-10"><div className="mx-auto flex max-w-[1440px] items-end justify-between gap-6"><SectionIntro eyebrow="Portfolio" title="Recent work"/><TextLink to="/gallery">Open gallery</TextLink></div></div><div className="grid grid-cols-2 md:grid-cols-4">{galleries.slice(0,4).map((g,i)=><div key={i} className="image-zoom aspect-square"><img src={g.src} alt={g.title} loading="lazy" className="h-full w-full object-cover" width={800} height={800}/></div>)}</div></section><Testimonials limit={6}/></>}
