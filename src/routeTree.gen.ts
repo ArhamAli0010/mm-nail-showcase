@@ -11,7 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AcademyRouteImport } from './routes/academy'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as AcademySlugRouteImport } from './routes/academy.$slug'
 
@@ -25,9 +30,34 @@ const AcademyRoute = AcademyRouteImport.update({
   path: '/academy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingRoute = BookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudioRoute = StudioRouteImport.update({
@@ -44,14 +74,24 @@ const AcademySlugRoute = AcademySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/academy': typeof AcademyRouteWithChildren
+  '/booking': typeof BookingRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
+  '/gallery': typeof GalleryRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
   '/studio': typeof StudioRoute
   '/academy/$slug': typeof AcademySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/academy': typeof AcademyRouteWithChildren
+  '/booking': typeof BookingRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
+  '/gallery': typeof GalleryRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
   '/studio': typeof StudioRoute
   '/academy/$slug': typeof AcademySlugRoute
 }
@@ -59,22 +99,63 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/academy': typeof AcademyRouteWithChildren
+  '/booking': typeof BookingRoute
+  '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
+  '/gallery': typeof GalleryRoute
   '/services': typeof ServicesRoute
+  '/sign-in': typeof SignInRoute
   '/studio': typeof StudioRoute
   '/academy/$slug': typeof AcademySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/academy' | '/services' | '/studio' | '/academy/$slug'
+  fullPaths:
+    | '/'
+    | '/academy'
+    | '/booking'
+    | '/contact'
+    | '/dashboard'
+    | '/gallery'
+    | '/services'
+    | '/sign-in'
+    | '/studio'
+    | '/academy/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/academy' | '/services' | '/studio' | '/academy/$slug'
-  id: '__root__' | '/' | '/academy' | '/services' | '/studio' | '/academy/$slug'
+  to:
+    | '/'
+    | '/academy'
+    | '/booking'
+    | '/contact'
+    | '/dashboard'
+    | '/gallery'
+    | '/services'
+    | '/sign-in'
+    | '/studio'
+    | '/academy/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/academy'
+    | '/booking'
+    | '/contact'
+    | '/dashboard'
+    | '/gallery'
+    | '/services'
+    | '/sign-in'
+    | '/studio'
+    | '/academy/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AcademyRoute: typeof AcademyRouteWithChildren
+  BookingRoute: typeof BookingRoute
+  ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
+  GalleryRoute: typeof GalleryRoute
   ServicesRoute: typeof ServicesRoute
+  SignInRoute: typeof SignInRoute
   StudioRoute: typeof StudioRoute
 }
 
@@ -94,11 +175,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AcademyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking': {
+      id: '/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof BookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/studio': {
@@ -132,7 +248,12 @@ const AcademyRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AcademyRoute: AcademyRouteWithChildren,
+  BookingRoute: BookingRoute,
+  ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
+  GalleryRoute: GalleryRoute,
   ServicesRoute: ServicesRoute,
+  SignInRoute: SignInRoute,
   StudioRoute: StudioRoute,
 }
 export const routeTree = rootRouteImport
